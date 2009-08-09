@@ -1,0 +1,3 @@
+This is a simple attempt to create a working Vector class. The primary idea is
+to support 3D vectors, but so far all of the functions but cross product will
+support vectors of any dimension.
