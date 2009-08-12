@@ -13,3 +13,5 @@ say $v1 × $v2;
 say $v1.LengthSquared;
 say $v1.Length;
 say $v1.Unitize;
+$v1 ⊕= $v2;
+say $v1;
