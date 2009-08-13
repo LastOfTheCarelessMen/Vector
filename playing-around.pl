@@ -26,3 +26,6 @@ my Vector $v8 = Vector.new(0,1,0,1,0,1,0);
 say $v7;
 say $v8;
 say $v7 ⊕ $v8;
+say $v7 × $v8;
+say $v7 dot ($v7 × $v8);
+say $v8 dot ($v7 × $v8);
