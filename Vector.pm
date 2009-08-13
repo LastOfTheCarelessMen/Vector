@@ -19,6 +19,11 @@ class Vector
         "(" ~ $.coordinates.join(', ') ~ ")";
     }
     
+    method Dim()
+    {
+        $.coordinates.elems;
+    }
+    
     method LengthSquared()
     {
         [+] ($.coordinates <<*>> $.coordinates); 
@@ -74,7 +79,7 @@ multi sub infix:<dot>(Vector $a, Vector $b)
     $a ⋅ $b;
 }
 
-multi sub infix:<×>(Vector $a, Vector $b)
+multi sub infix:<×>(Vector $a where { $a.Dim == 3 }, Vector $b where { $b.Dim == 3 })
 {
     Vector.new($a.coordinates[1] * $b.coordinates[2] - $a.coordinates[2] * $b.coordinates[1], 
                $a.coordinates[2] * $b.coordinates[0] - $a.coordinates[0] * $b.coordinates[2], 
