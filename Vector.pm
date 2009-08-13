@@ -4,7 +4,7 @@ class Vector
 {
     has $.coordinates;
     
-    multi method new ($self: Num $x, Num $y, Num $z) 
+    multi method new ($self: $x, $y, $z) 
     {
   	    $self.bless(*, coordinates => ($x, $y, $z));
   	}
