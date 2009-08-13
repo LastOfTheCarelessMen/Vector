@@ -61,14 +61,32 @@ multi sub prefix:<∇>(Vector $a)
     Vector.new(0 <<-<< $a.coordinates);
 }
 
-sub infix:<⋅>(Vector $a, Vector $b)
+# SHOULD: Scalar * Vector operator - when Rakudo supports
+# SHOULD: Vector / Scalar operator - when Rakudo supports
+
+multi sub infix:<⋅>(Vector $a, Vector $b)
 {
     [+]($a.coordinates «*» $b.coordinates);
 }
 
-sub infix:<×>(Vector $a, Vector $b)
+multi sub infix:<dot>(Vector $a, Vector $b)
+{
+    $a ⋅ $b;
+}
+
+multi sub infix:<×>(Vector $a, Vector $b)
 {
     Vector.new($a.coordinates[1] * $b.coordinates[2] - $a.coordinates[2] * $b.coordinates[1], 
                $a.coordinates[2] * $b.coordinates[0] - $a.coordinates[0] * $b.coordinates[2], 
                $a.coordinates[0] * $b.coordinates[1] - $a.coordinates[1] * $b.coordinates[0]);
+}
+
+multi sub infix:<cross>(Vector $a, Vector $b)
+{
+    $a × $b;
+}
+
+multi sub circumfix:<⎡ ⎤>(Vector $a)
+{
+    $a.Length;
 }
