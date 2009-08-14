@@ -6,13 +6,13 @@ class Vector
     
     multi method new ($self: *@x) 
     {
-  	    $self.bless(*, coordinates => @x);
-  	}
-  	
-  	multi method new ($self: @x) 
+        $self.bless(*, coordinates => @x);
+    }
+    
+    multi method new ($self: @x) 
     {
-  	    $self.bless(*, coordinates => @x);
-  	}
+        $self.bless(*, coordinates => @x);
+    }
     
     our Str multi method Str() 
     {
