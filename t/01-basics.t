@@ -29,15 +29,21 @@ is($v5.Dim, 5, "Dim works for 5D Vector");
 is($v7.Dim, 7, "Dim works for 7D Vector");
 
 is(~($v1 ⊕ $v2), "(4, 6, 3)", "Basic sum works");
+is(~($v7 ⊕ $v9), "(1, 0, 1, 0, 0, 0, 0)", "Basic sum works");
 is($v1 ⊕ $v2, $v2 ⊕ $v1, "Addition is commutative");
 is(($v1 ⊕ $v2) ⊕ $v3, $v1 ⊕ ($v2 ⊕ $v3), "Addition is associative");
 is($v1 ⊕ $origin3d, $v1, "Addition with origin leaves original");
+
+is($origin3d.Length, 0, "Origin has 0 length");
+is($v6.Length, 1, "Simple length calculation");
+is($v8.Length, 1, "Simple length calculation");
 
 is(~($v1 ∇ $v2), "(-2, -2, 3)", "Basic subtraction works");
 is($v1 ∇ $v2, ∇($v2 ∇ $v1), "Subtraction is anticommutative");
 is($v1 ∇ $origin3d, $v1, "Subtracting the origin leaves original");
 is(∇$origin3d, $origin3d, "Negating the origin leaves the origin");
 is(~(∇$v2), "(-3, -4, 0)", "Negating works");
+
 
 
 
