@@ -37,7 +37,7 @@ class Vector
     method Unitize()
     {
         my $length = self.Length;
-        if $length.abs > 1e-10
+        if $length > 1e-10
         {
             return Vector.new($.coordinates >>/>> $length);
         }

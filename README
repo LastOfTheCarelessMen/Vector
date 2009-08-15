@@ -1,3 +1,10 @@
-This is a simple attempt to create a working Vector class. The primary idea is
-to support 3D vectors, but so far all of the functions but cross product will
-support vectors of any dimension.
+This is a simple attempt to create a working Vector class. I initially set out
+to support 3D vectors, but it turned out to be easier to support vectors of
+any dimension.
+
+Test.pm is borrowed from Rakudo, as it is easiest to have a local copy.
+
+There's no configure or makefile yet, but you can run the tests by simply
+issuing
+
+    prove -e <your_perl6_executable> -v t/01-basics.t
