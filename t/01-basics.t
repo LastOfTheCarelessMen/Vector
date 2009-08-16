@@ -31,6 +31,8 @@ is(~$v1, "(1, 2, 3)", "Stringify works");
 is(~$v3, "(-1, 0, 2)", "Stringify works");
 is(~$origin3d, "(0, 0, 0)", "Stringify works");
 is(~$v5, "(1, 2, 3, 4, 5)", "Stringify works");
+is(~eval($v1.perl), ~$v1, ".perl works");
+is(~eval($v9.perl), ~$v9, ".perl works");
 
 is($v1.Dim, 3, "Dim works for 3D Vector");
 is($v5.Dim, 5, "Dim works for 5D Vector");

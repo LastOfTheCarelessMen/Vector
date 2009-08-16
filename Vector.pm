@@ -19,6 +19,11 @@ class Vector
         "(" ~ $.coordinates.join(', ') ~ ")";
     }
     
+    our Str multi method perl()
+    {
+        "Vector.new(" ~ $.coordinates.join(', ') ~ ")";        
+    }
+    
     method Dim()
     {
         $.coordinates.elems;
