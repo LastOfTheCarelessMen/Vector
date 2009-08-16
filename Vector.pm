@@ -21,7 +21,7 @@ class Vector
     
     our Str multi method perl()
     {
-        "Vector.new(" ~ $.coordinates.join(', ') ~ ")";        
+        "Vector.new(" ~ $.coordinates.map({.perl}).join(', ') ~ ")";        
     }
     
     method Dim()

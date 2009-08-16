@@ -20,19 +20,24 @@ my Vector $v7 = Vector.new(1,0,0,0,0,0,0);
 my Vector $v8 = Vector.new(0,1,0,0,0,0,0);
 my Vector $v9 = Vector.new(1..7);
 my Vector $v10 = Vector.new(10,20,1,10,20,10,30);
+my Vector $vcrazy = Vector.new(Vector.new(1, 2, 3), Vector.new(-1, 0, -1));
 
 isa_ok($v1, Vector, "Variable is of type Vector");
 isa_ok($v2, Vector, "Variable is of type Vector");
 isa_ok($v3, Vector, "Variable is of type Vector");
 isa_ok($v5, Vector, "Variable is of type Vector");
 isa_ok($v7, Vector, "Variable is of type Vector");
+isa_ok($vcrazy, Vector, "Variable is of type Vector");
 
 is(~$v1, "(1, 2, 3)", "Stringify works");
 is(~$v3, "(-1, 0, 2)", "Stringify works");
 is(~$origin3d, "(0, 0, 0)", "Stringify works");
 is(~$v5, "(1, 2, 3, 4, 5)", "Stringify works");
+is(~$vcrazy, "((1, 2, 3), (-1, 0, -1))", "Stringify works");
+
 is(~eval($v1.perl), ~$v1, ".perl works");
 is(~eval($v9.perl), ~$v9, ".perl works");
+is(~eval($vcrazy.perl), ~$vcrazy, ".perl works");
 
 is($v1.Dim, 3, "Dim works for 3D Vector");
 is($v5.Dim, 5, "Dim works for 5D Vector");
