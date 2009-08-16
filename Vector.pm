@@ -74,7 +74,7 @@ multi sub prefix:<∇>(Vector $a)
 # SHOULD: Scalar * Vector operator - when Rakudo supports
 # SHOULD: Vector / Scalar operator - when Rakudo supports
 
-multi sub infix:<⋅>(Vector $a, Vector $b where { $a.Dim == $b.Dim })
+multi sub infix:<⋅>(Vector $a, Vector $b where { $a.Dim == $b.Dim }) # is tighter(&infix:<+>) (NYI)
 {
     [+]($a.coordinates «*» $b.coordinates);
 }
