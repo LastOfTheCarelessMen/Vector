@@ -22,6 +22,8 @@ my Vector $v9 = Vector.new(1..7);
 my Vector $v10 = Vector.new(10,20,1,10,20,10,30);
 my Vector $vcrazy = Vector.new(Vector.new(1, 2, 3), Vector.new(-1, 0, -1));
 
+my @vectors = ($v1, $v2, $v3, $origin3d, $v5, $v6, $v7, $v8, $v9, $v10);
+
 isa_ok($v1, Vector, "Variable is of type Vector");
 isa_ok($v2, Vector, "Variable is of type Vector");
 isa_ok($v3, Vector, "Variable is of type Vector");
@@ -50,9 +52,18 @@ is($v1 ⊕ $v2, $v2 ⊕ $v1, "Addition is commutative");
 is(($v1 ⊕ $v2) ⊕ $v3, $v1 ⊕ ($v2 ⊕ $v3), "Addition is associative");
 is($v1 ⊕ $origin3d, $v1, "Addition with origin leaves original");
 
+#lengths
 is($origin3d.Length, 0, "Origin has 0 length");
 is($v6.Length, 1, "Simple length calculation");
 is($v8.Length, 1, "Simple length calculation");
+
+for @vectors -> $v
+{
+    my $len = $v.Length;
+    is_approx($v.LengthSquared, $len * $len, "LengthSquared equals Length, squared");
+    is_approx($v.LengthSquared, ⎡$v ⎤ * ⎡$v ⎤, "v.LengthSquared equals ⎡v ⎤ squared");
+    is_approx($v.LengthSquared, $v ⋅ $v, "v.LengthSquared equals v ⋅ v");
+}
 
 is(~($v1 ∇ $v2), "(-2, -2, 3)", "Basic subtraction works");
 is($v1 ∇ $v2, ∇($v2 ∇ $v1), "Subtraction is anticommutative");
