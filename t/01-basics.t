@@ -59,8 +59,7 @@ is($v8.Length, 1, "Simple length calculation");
 
 for @vectors -> $v
 {
-    my $len = $v.Length;
-    is_approx($v.LengthSquared, $len * $len, "LengthSquared equals Length, squared");
+    is_approx($v.LengthSquared, $v.Length ** 2, "LengthSquared equals Length, squared");
     is_approx($v.LengthSquared, ⎡$v ⎤ * ⎡$v ⎤, "v.LengthSquared equals ⎡v ⎤ squared");
     is_approx($v.LengthSquared, $v ⋅ $v, "v.LengthSquared equals v ⋅ v");
 }
