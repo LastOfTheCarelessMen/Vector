@@ -55,16 +55,6 @@ is(~(∇$v2), "(-3, -4, 0)", "Negating works");
 #cross product tests
 is(~($v1 × $v2), "(-12, 9, -2)", "Basic cross product works");
 
-for ($v7, $v8, $v9, $v10) X ($v7, $v8, $v9, $v10) -> $x, $y
-{
-    my $cross = $x × $y;
-    is_approx($cross ⋅ $x, 0, "(x × y) ⋅ x = 0");
-    is_approx($cross ⋅ $y, 0, "(x × y) ⋅ y = 0");
-    is_approx_vector($cross, ∇($y × $x), "x × y = -y × x");
-    is_approx($cross.LengthSquared, $x.LengthSquared * $y.LengthSquared - ($x ⋅ $y) ** 2, 
-              "|x × y|^2 = |x|^2 * |y|^2 - (x ⋅ y)^2");
-}
-
 for ($v1, $v2, $v3) X ($v1, $v2, $v3) -> $x, $y
 {
     my $cross = $x × $y;
@@ -75,8 +65,21 @@ for ($v1, $v2, $v3) X ($v1, $v2, $v3) -> $x, $y
               "|x × y|^2 = |x|^2 * |y|^2 - (x ⋅ y)^2");
 }
 
+for ($v7, $v8, $v9, $v10) X ($v7, $v8, $v9, $v10) -> $x, $y
+{
+    my $cross = $x × $y;
+    is_approx($cross ⋅ $x, 0, "(x × y) ⋅ x = 0");
+    is_approx($cross ⋅ $y, 0, "(x × y) ⋅ y = 0");
+    is_approx_vector($cross, ∇($y × $x), "x × y = -y × x");
+    is_approx($cross.LengthSquared, $x.LengthSquared * $y.LengthSquared - ($x ⋅ $y) ** 2, 
+              "|x × y|^2 = |x|^2 * |y|^2 - (x ⋅ y)^2");
+}
+
+lives_ok { $v7 cross $v8, "7D cross product works writing out cross"}
 dies_ok( { $v1 × $v7 }, "You can't do cross products of different dimensions");
 dies_ok( { $v5 × $v6 }, "You can't do 5D cross products");
+dies_ok( { $v1 cross $v7 }, "You can't do cross products of different dimensions");
+dies_ok( { $v5 cross $v6 }, "You can't do 5D cross products");
 
 
 
