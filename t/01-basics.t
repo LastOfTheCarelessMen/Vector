@@ -43,6 +43,7 @@ is($v1.Dim, 3, "Dim works for 3D Vector");
 is($v5.Dim, 5, "Dim works for 5D Vector");
 is($v7.Dim, 7, "Dim works for 7D Vector");
 
+#basic math tests
 is(~($v1 ⊕ $v2), "(4, 6, 3)", "Basic sum works");
 is(~($v7 ⊕ $v9), "(2, 2, 3, 4, 5, 6, 7)", "Basic sum works, 7D");
 is($v1 ⊕ $v2, $v2 ⊕ $v1, "Addition is commutative");
@@ -58,6 +59,24 @@ is($v1 ∇ $v2, ∇($v2 ∇ $v1), "Subtraction is anticommutative");
 is($v1 ∇ $origin3d, $v1, "Subtracting the origin leaves original");
 is(∇$origin3d, $origin3d, "Negating the origin leaves the origin");
 is(~(∇$v2), "(-3, -4, 0)", "Negating works");
+
+#dot product tests
+is_approx($v7 dot $v8, 0, "Perpendicular vectors have 0 dot product");
+
+for ($v1, $v2, $v3) X ($v1, $v2, $v3) -> $x, $y
+{
+    is_approx($x ⋅ $y, $y ⋅ $x, "x ⋅ y = y ⋅ x");
+    is_approx($x ⋅ ($y ⊕ $v3), ($x ⋅ $y) + ($x ⋅ $v3), "x ⋅ (y + v3) = x ⋅ y + x ⋅ v3");
+}
+
+for ($v5, $v6) X ($v5, $v6) -> $x, $y
+{
+    is_approx($x ⋅ $y, $y ⋅ $x, "x ⋅ y = y ⋅ x");
+    is_approx($x ⋅ ($y ⊕ $v6), ($x ⋅ $y) + ($x ⋅ $v6), "x ⋅ (y + v6) = x ⋅ y + x ⋅ v3");
+}
+
+dies_ok( { $v5 ⋅ $v7 }, "You can't do dot products of different dimensions");
+dies_ok( { $v7 dot $v5 }, "You can't do dot products of different dimensions");
 
 #cross product tests
 is(~($v1 × $v2), "(-12, 9, -2)", "Basic cross product works");
