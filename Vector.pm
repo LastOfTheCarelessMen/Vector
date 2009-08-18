@@ -31,7 +31,7 @@ class Vector
     
     method LengthSquared()
     {
-        [+] (@.coordinates <<*>> @.coordinates); 
+        [+] (@.coordinates »*« @.coordinates); 
     }
     
     method Length()
@@ -56,13 +56,13 @@ class Vector
 # SHOULD: change this back to normal + when Rakudo supports that
 multi sub infix:<⊕>(Vector $a, Vector $b where { $a.Dim == $b.Dim })
 {
-    Vector.new($a.coordinates «+» $b.coordinates);
+    Vector.new($a.coordinates »+« $b.coordinates);
 }
 
 # SHOULD: change this back to normal - when Rakudo supports that
 multi sub infix:<∇>(Vector $a, Vector $b where { $a.Dim == $b.Dim })
 {
-    Vector.new($a.coordinates «-» $b.coordinates);
+    Vector.new($a.coordinates »-« $b.coordinates);
 }
 
 # SHOULD: change this back to normal - when Rakudo supports that
@@ -76,7 +76,7 @@ multi sub prefix:<∇>(Vector $a)
 
 multi sub infix:<⋅>(Vector $a, Vector $b where { $a.Dim == $b.Dim }) # is tighter(&infix:<+>) (NYI)
 {
-    [+]($a.coordinates «*» $b.coordinates);
+    [+]($a.coordinates »*« $b.coordinates);
 }
 
 multi sub infix:<dot>(Vector $a, Vector $b)
