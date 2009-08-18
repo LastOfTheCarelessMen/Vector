@@ -102,6 +102,10 @@ dies_ok( { $v7 dot $v5 }, "You can't do dot products of different dimensions");
     $a ⋅= $v2;
     is_approx($v1 ⋅ $v2, $a, "⋅= works");
 }
+{
+    my Vector $a = $v1;
+    dies_ok( { $a ⋅= $v2; }, "You can't do dot= on a Vector variable");
+}
 
 #cross product tests
 is(~($v1 × $v2), "(-12, 9, -2)", "Basic cross product works");
@@ -131,6 +135,12 @@ dies_ok( { $v1 × $v7 }, "You can't do cross products of different dimensions");
 dies_ok( { $v5 × $v6 }, "You can't do 5D cross products");
 dies_ok( { $v1 cross $v7 }, "You can't do cross products of different dimensions");
 dies_ok( { $v5 cross $v6 }, "You can't do 5D cross products");
+
+{
+    my $a = $v1;
+    $a ×= $v2;
+    is_approx_vector($v1 × $v2, $a, "×= works");
+}
 
 
 
