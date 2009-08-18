@@ -51,6 +51,22 @@ is(~($v7 ⊕ $v9), "(2, 2, 3, 4, 5, 6, 7)", "Basic sum works, 7D");
 is($v1 ⊕ $v2, $v2 ⊕ $v1, "Addition is commutative");
 is(($v1 ⊕ $v2) ⊕ $v3, $v1 ⊕ ($v2 ⊕ $v3), "Addition is associative");
 is($v1 ⊕ $origin3d, $v1, "Addition with origin leaves original");
+{
+    my Vector $a = $v1;
+    $a ⊕= $v2;
+    is(~($v1 ⊕ $v2), ~$a, "+= works");
+}
+
+is(~($v1 ∇ $v2), "(-2, -2, 3)", "Basic subtraction works");
+is($v1 ∇ $v2, ∇($v2 ∇ $v1), "Subtraction is anticommutative");
+is($v1 ∇ $origin3d, $v1, "Subtracting the origin leaves original");
+is(∇$origin3d, $origin3d, "Negating the origin leaves the origin");
+is(~(∇$v2), "(-3, -4, 0)", "Negating works");
+{
+    my Vector $a = $v1;
+    $a ∇= $v2;
+    is(~($v1 ∇ $v2), ~$a, "+= works");
+}
 
 #lengths
 is($origin3d.Length, 0, "Origin has 0 length");
@@ -63,12 +79,6 @@ for @vectors -> $v
     is_approx($v.LengthSquared, ⎡$v ⎤ * ⎡$v ⎤, "v.LengthSquared equals ⎡v ⎤ squared");
     is_approx($v.LengthSquared, $v ⋅ $v, "v.LengthSquared equals v ⋅ v");
 }
-
-is(~($v1 ∇ $v2), "(-2, -2, 3)", "Basic subtraction works");
-is($v1 ∇ $v2, ∇($v2 ∇ $v1), "Subtraction is anticommutative");
-is($v1 ∇ $origin3d, $v1, "Subtracting the origin leaves original");
-is(∇$origin3d, $origin3d, "Negating the origin leaves the origin");
-is(~(∇$v2), "(-3, -4, 0)", "Negating works");
 
 #dot product tests
 is_approx($v7 dot $v8, 0, "Perpendicular vectors have 0 dot product");
