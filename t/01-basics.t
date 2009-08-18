@@ -97,6 +97,11 @@ for ($v5, $v6) X ($v5, $v6) -> $x, $y
 
 dies_ok( { $v5 ⋅ $v7 }, "You can't do dot products of different dimensions");
 dies_ok( { $v7 dot $v5 }, "You can't do dot products of different dimensions");
+{
+    my $a = $v1;
+    $a ⋅= $v2;
+    is_approx($v1 ⋅ $v2, $a, "⋅= works");
+}
 
 #cross product tests
 is(~($v1 × $v2), "(-12, 9, -2)", "Basic cross product works");
