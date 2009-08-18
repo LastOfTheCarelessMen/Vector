@@ -2,7 +2,7 @@ use v6;
 
 class Vector
 {
-    has $.coordinates;
+    has @.coordinates;
     
     multi method new (*@x) 
     {
@@ -16,22 +16,22 @@ class Vector
     
     our Str multi method Str() 
     {
-        "(" ~ $.coordinates.join(', ') ~ ")";
+        "(" ~ @.coordinates.join(', ') ~ ")";
     }
     
     our Str multi method perl()
     {
-        "Vector.new(" ~ $.coordinates.map({.perl}).join(', ') ~ ")";        
+        "Vector.new(" ~ @.coordinates.map({.perl}).join(', ') ~ ")";        
     }
     
     method Dim()
     {
-        $.coordinates.elems;
+        @.coordinates.elems;
     }
     
     method LengthSquared()
     {
-        [+] ($.coordinates <<*>> $.coordinates); 
+        [+] (@.coordinates <<*>> @.coordinates); 
     }
     
     method Length()
@@ -44,11 +44,11 @@ class Vector
         my $length = self.Length;
         if $length > 1e-10
         {
-            return Vector.new($.coordinates >>/>> $length);
+            return Vector.new(@.coordinates >>/>> $length);
         }
         else
         {
-            return Vector.new($.coordinates);
+            return Vector.new(@.coordinates);
         }
     }
 }
