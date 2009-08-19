@@ -126,3 +126,5 @@ multi sub circumfix:<⎡ ⎤>(Vector $a)
     $a.Length;
 }
 
+subset UnitVector of Vector where { (1 - 1e-10) < $^v.Length < (1 + 1e-10) };
+

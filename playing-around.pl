@@ -29,3 +29,10 @@ say $v7 ⊕ $v8;
 say $v7 × $v8;
 say $v7 dot ($v7 × $v8);
 say $v8 dot ($v7 × $v8);
+
+my UnitVector $a = Vector.new(1, 0, 0);
+say $a;
+$a ⊕= $v2;
+say $a;
+$a = $v2;
+say $a;
