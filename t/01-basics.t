@@ -142,11 +142,17 @@ dies_ok( { $v5 cross $v6 }, "You can't do 5D cross products");
     is_approx_vector($v1 × $v2, $a, "×= works");
 }
 
+# UnitVector tests
+{
+    my UnitVector $a = Vector.new(1, 0, 0);
+    isa_ok($a, UnitVector, "Variable is of type UnitVector");
+    isa_ok($a, Vector, "Variable is of type Vector");
+}
 {
     my UnitVector $a = UnitVector.new(1, 0, 0);
     my $b = $a;
     $b ⊕= $v2;
-    is_approx_vector($a ⊕ $v2, $b, "⊕= works on UnitVector");
+    is_approx_vector($a ⊕ $v2, $b, "+= works on UnitVector");
 }
 {
     my UnitVector $a = Vector.new(1, 0, 0);
