@@ -56,6 +56,7 @@ is($v1 ⊕ $origin3d, $v1, "Addition with origin leaves original");
     $a ⊕= $v2;
     is(~($v1 ⊕ $v2), ~$a, "+= works");
 }
+# is(~($v1 + $v2), "(4, 6, 3)", "Basic sum works");
 
 is(~($v1 ∇ $v2), "(-2, -2, 3)", "Basic subtraction works");
 is($v1 ∇ $v2, ∇($v2 ∇ $v1), "Subtraction is anticommutative");

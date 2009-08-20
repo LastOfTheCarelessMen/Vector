@@ -54,6 +54,11 @@ multi sub infix:<⊕>(Vector $a, Vector $b where { $a.Dim == $b.Dim })
     Vector.new($a.coordinates »+« $b.coordinates);
 }
 
+# multi sub infix:<+>(Vector $a, Vector $b where { $a.Dim == $b.Dim })
+# {
+#     Vector.new($a.coordinates »+« $b.coordinates);
+# }
+
 # SHOULD: change this back to normal - when Rakudo supports that
 multi sub infix:<∇>(Vector $a, Vector $b where { $a.Dim == $b.Dim })
 {
