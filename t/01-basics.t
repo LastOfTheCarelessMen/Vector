@@ -75,9 +75,8 @@ is($v8.Length, 1, "Simple length calculation");
 
 for @vectors -> $v
 {
-    is_approx($v.LengthSquared, $v.Length ** 2, "LengthSquared equals Length, squared");
-    is_approx($v.LengthSquared, ⎡$v ⎤ * ⎡$v ⎤, "v.LengthSquared equals ⎡v ⎤ squared");
-    is_approx($v.LengthSquared, $v ⋅ $v, "v.LengthSquared equals v ⋅ v");
+    is_approx($v.Length ** 2, ⎡$v ⎤ * ⎡$v ⎤, "v.Length squared equals ⎡v ⎤ squared");
+    is_approx($v.Length ** 2, $v ⋅ $v, "v.Length squared equals v ⋅ v");
 }
 
 #dot product tests
@@ -116,7 +115,7 @@ for ($v1, $v2, $v3) X ($v1, $v2, $v3) -> $x, $y
     is_approx($cross ⋅ $x, 0, "(x × y) ⋅ x = 0");
     is_approx($cross ⋅ $y, 0, "(x × y) ⋅ y = 0");
     is_approx_vector($cross, ∇($y × $x), "x × y = -y × x");
-    is_approx($cross.LengthSquared, $x.LengthSquared * $y.LengthSquared - ($x ⋅ $y) ** 2, 
+    is_approx($cross.Length ** 2, $x.Length ** 2 * $y.Length ** 2 - ($x ⋅ $y) ** 2, 
               "|x × y|^2 = |x|^2 * |y|^2 - (x ⋅ y)^2");
 }
 
@@ -126,7 +125,7 @@ for ($v7, $v8, $v9, $v10) X ($v7, $v8, $v9, $v10) -> $x, $y
     is_approx($cross ⋅ $x, 0, "(x × y) ⋅ x = 0");
     is_approx($cross ⋅ $y, 0, "(x × y) ⋅ y = 0");
     is_approx_vector($cross, ∇($y × $x), "x × y = -y × x");
-    is_approx($cross.LengthSquared, $x.LengthSquared * $y.LengthSquared - ($x ⋅ $y) ** 2, 
+    is_approx($cross.Length ** 2, $x.Length ** 2 * $y.Length ** 2 - ($x ⋅ $y) ** 2, 
               "|x × y|^2 = |x|^2 * |y|^2 - (x ⋅ y)^2");
 }
 

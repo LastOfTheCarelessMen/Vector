@@ -29,14 +29,9 @@ class Vector
         @.coordinates.elems;
     }
     
-    method LengthSquared()
-    {
-        [+] (@.coordinates »*« @.coordinates); 
-    }
-    
     method Length()
     {
-        self.LengthSquared.sqrt;
+        sqrt [+] (@.coordinates »*« @.coordinates);
     }
     
     method Unitize()
