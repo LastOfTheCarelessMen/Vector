@@ -159,7 +159,29 @@ dies_ok( { $v5 cross $v6 }, "You can't do 5D cross products");
     dies_ok( { $a ⊕= $v2; }, "Catch if += violates the UnitVector constraint");
 }
 
+class VectorWithLength is Vector
+{
+    has $.length;
+    
+    multi method new (*@x) 
+    {
+        self.bless(*, coordinates => @x, length => sqrt [+] (@x »*« @x));
+    }
+    
+    multi method new (@x) 
+    {
+        self.bless(*, coordinates => @x, length => sqrt [+] (@x »*« @x));
+    }
+    
+    submethod Length
+    {
+        $.length;
+    }
+}
 
-
+my VectorWithLength $vl = VectorWithLength.new($v7.coordinates);
+isa_ok($vl, VectorWithLength, "Variable is of type VectorWithLength");
+my $vlc = eval($vl.perl);
+isa_ok($vlc, VectorWithLength, "eval'd perl'd variable is of type VectorWithLength");
 
 done_testing;
