@@ -80,6 +80,22 @@ for @vectors -> $v
     is_approx($v.Length ** 2, $v ⋅ $v, "v.Length squared equals v ⋅ v");
 }
 
+for @vectors -> $v
+{
+    my Vector $vn = $v V* 4.5;
+    is_approx($vn.Length, $v.Length * 4.5, "Scalar by Vector multiply gets proper length");
+    is_approx_vector($vn.Unitize, $v.Unitize, "Scalar by Vector multiply gets proper direction");
+    is_approx_vector($vn, 4.5 V* $v, "Scalar by Vector multiply is commutative");
+}
+
+for @vectors -> $v
+{
+    my Vector $vn = $v V/ 4.5;
+    is_approx($vn.Length, $v.Length / 4.5, "Vector by Scalar divide gets proper length");
+    is_approx_vector($vn.Unitize, $v.Unitize, "Vector by Scalar divide gets proper direction");
+    is_approx_vector($vn, $v V* (1.0 / 4.5), "Vector by Scalar divide is equal to multiplication by reciprocal");
+}
+
 #dot product tests
 is_approx($v7 dot $v8, 0, "Perpendicular vectors have 0 dot product");
 

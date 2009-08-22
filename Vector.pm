@@ -71,8 +71,22 @@ multi sub prefix:<∇>(Vector $a)
     Vector.new(0 <<-<< $a.coordinates);
 }
 
-# SHOULD: Scalar * Vector operator - when Rakudo supports
+# SHOULD: make this scalar * Vector operator - when Rakudo supports
+multi sub infix:<V*>(Vector $a, $b)
+{
+    Vector.new($a.coordinates >>*>> $b);
+}
+
+multi sub infix:<V*>($a, Vector $b)
+{
+    Vector.new($a <<*<< $b.coordinates);
+}
+
 # SHOULD: Vector / Scalar operator - when Rakudo supports
+multi sub infix:<V/>(Vector $a, $b)
+{
+    Vector.new($a.coordinates >>/>> $b);
+}
 
 multi sub infix:<⋅>(Vector $a, Vector $b where { $a.Dim == $b.Dim }) # is tighter(&infix:<+>) (NYI)
 {
