@@ -49,24 +49,19 @@ class Vector
 }
 
 # SHOULD: change this back to normal + when Rakudo supports that
-multi sub infix:<⊕>(Vector $a, Vector $b where { $a.Dim == $b.Dim })
+multi sub infix:<V+>(Vector $a, Vector $b where { $a.Dim == $b.Dim })
 {
     Vector.new($a.coordinates »+« $b.coordinates);
 }
 
-# multi sub infix:<+>(Vector $a, Vector $b where { $a.Dim == $b.Dim })
-# {
-#     Vector.new($a.coordinates »+« $b.coordinates);
-# }
-
 # SHOULD: change this back to normal - when Rakudo supports that
-multi sub infix:<∇>(Vector $a, Vector $b where { $a.Dim == $b.Dim })
+multi sub infix:<V->(Vector $a, Vector $b where { $a.Dim == $b.Dim })
 {
     Vector.new($a.coordinates »-« $b.coordinates);
 }
 
 # SHOULD: change this back to normal - when Rakudo supports that
-multi sub prefix:<∇>(Vector $a)
+multi sub prefix:<V->(Vector $a)
 {
     Vector.new(0 <<-<< $a.coordinates);
 }
