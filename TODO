@@ -1,0 +1,11 @@
+Switch V+, V-, V*, and V/ to +, -, *, and /. (Waiting on Rakudobug to make
+this work.)
+
+Add some form of [] operator to Vector to allow easy access to the coordinate
+values.  (This may also be a Rakudobug?)
+
+Add author info to README.
+
+Get Vector ready to work with proto.
+
+Convince masak to add it to proto's list of packages.
