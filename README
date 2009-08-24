@@ -8,3 +8,7 @@ There's no configure or makefile yet, but you can run the tests by simply
 issuing
 
     prove -e <your_perl6_executable> -v t/01-basics.t
+
+If you have questions or comments, I can be reached at
+
+    last.of.the.careless.men@gmail.com

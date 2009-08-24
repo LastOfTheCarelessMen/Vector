@@ -6,6 +6,8 @@ values.  (This may also be a Rakudobug?)
 
 Add author info to README.
 
-Get Vector ready to work with proto.
+Get a Configure.pl set up.
 
-Convince masak to add it to proto's list of packages.
+Move Vector.pm to new lib/ directory.
+
+Make testing work in that case.
