@@ -4,10 +4,3 @@ this work.)
 Add some form of [] operator to Vector to allow easy access to the coordinate
 values.  (This may also be a Rakudobug?)
 
-Add author info to README.
-
-Get a Configure.pl set up.
-
-Move Vector.pm to new lib/ directory.
-
-Make testing work in that case.

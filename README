@@ -4,10 +4,13 @@ any dimension.
 
 Test.pm is borrowed from Rakudo, as it is easiest to have a local copy.
 
-There's no configure or makefile yet, but you can run the tests by simply
-issuing
+Thanks to code from masak and mberends, Vector now has a configuration system.
+To set things up:
 
-    prove -e <your_perl6_executable> -v t/01-basics.t
+   ./Configure  # needs to run via your Perl 6 installation, if just plain #!perl6
+                # doesn't work
+   make
+   make test 
 
 If you have questions or comments, I can be reached at
 
