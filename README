@@ -7,8 +7,9 @@ Test.pm is borrowed from Rakudo, as it is easiest to have a local copy.
 Thanks to code from masak and mberends, Vector now has a configuration system.
 To set things up:
 
-   ./Configure  # needs to run via your Perl 6 installation, if just plain #!perl6
-                # doesn't work
+   PERL6LIB=$PERL6LIB:lib ./Configure  # May need to run via your Perl 6 
+									   # installation, if just plain #!perl6 
+									   # doesn't work
    make
    make test 
 
