@@ -28,10 +28,23 @@ class Vector
     {
         @.coordinates.elems;
     }
-    
+}
+
+multi sub infix:<⋅>(Vector $a, Vector $b where { $a.Dim == $b.Dim }) # is tighter(&infix:<+>) (NYI)
+{
+    [+]($a.coordinates »*« $b.coordinates);
+}
+
+multi sub infix:<dot>(Vector $a, Vector $b)
+{
+    $a ⋅ $b;
+}
+
+class Vector is also
+{
     method Length()
     {
-        sqrt [+] (@.coordinates »*« @.coordinates);
+        sqrt(self ⋅ self);
     }
     
     method Unitize()
@@ -81,16 +94,6 @@ multi sub infix:<V*>($a, Vector $b)
 multi sub infix:<V/>(Vector $a, $b)
 {
     Vector.new($a.coordinates >>/>> $b);
-}
-
-multi sub infix:<⋅>(Vector $a, Vector $b where { $a.Dim == $b.Dim }) # is tighter(&infix:<+>) (NYI)
-{
-    [+]($a.coordinates »*« $b.coordinates);
-}
-
-multi sub infix:<dot>(Vector $a, Vector $b)
-{
-    $a ⋅ $b;
 }
 
 multi sub infix:<×>(Vector $a where { $a.Dim == 3 }, Vector $b where { $b.Dim == 3 })
