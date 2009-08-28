@@ -4,7 +4,7 @@ use Test;
 
 sub is_approx_vector(Vector $a, Vector $b, $desc)
 {
-    ok(($a V- $b).Length < 0.00001, $desc);
+    ok(($a - $b).Length < 0.00001, $desc);
 }
 
 plan *;
@@ -46,27 +46,27 @@ is($v5.Dim, 5, "Dim works for 5D Vector");
 is($v7.Dim, 7, "Dim works for 7D Vector");
 
 #basic math tests
-is(~($v1 V+ $v2), "(4, 6, 3)", "Basic sum works");
-is(~($v7 V+ $v9), "(2, 2, 3, 4, 5, 6, 7)", "Basic sum works, 7D");
-is($v1 V+ $v2, $v2 V+ $v1, "Addition is commutative");
-is(($v1 V+ $v2) V+ $v3, $v1 V+ ($v2 V+ $v3), "Addition is associative");
-is($v1 V+ $origin3d, $v1, "Addition with origin leaves original");
+is(~($v1 + $v2), "(4, 6, 3)", "Basic sum works");
+is(~($v7 + $v9), "(2, 2, 3, 4, 5, 6, 7)", "Basic sum works, 7D");
+is($v1 + $v2, $v2 + $v1, "Addition is commutative");
+is(($v1 + $v2) + $v3, $v1 + ($v2 + $v3), "Addition is associative");
+is($v1 + $origin3d, $v1, "Addition with origin leaves original");
 {
     my Vector $a = $v1;
-    $a V+= $v2;
-    is(~($v1 V+ $v2), ~$a, "+= works");
+    $a += $v2;
+    is(~($v1 + $v2), ~$a, "+= works");
 }
 # is(~($v1 + $v2), "(4, 6, 3)", "Basic sum works");
 
-is(~($v1 V- $v2), "(-2, -2, 3)", "Basic subtraction works");
-is($v1 V- $v2, V-($v2 V- $v1), "Subtraction is anticommutative");
-is($v1 V- $origin3d, $v1, "Subtracting the origin leaves original");
-is(V-$origin3d, $origin3d, "Negating the origin leaves the origin");
-is(~(V-$v2), "(-3, -4, 0)", "Negating works");
+is(~($v1 - $v2), "(-2, -2, 3)", "Basic subtraction works");
+is($v1 - $v2, -($v2 - $v1), "Subtraction is anticommutative");
+is($v1 - $origin3d, $v1, "Subtracting the origin leaves original");
+is(-$origin3d, $origin3d, "Negating the origin leaves the origin");
+is(~(-$v2), "(-3, -4, 0)", "Negating works");
 {
     my Vector $a = $v1;
-    $a V-= $v2;
-    is(~($v1 V- $v2), ~$a, "+= works");
+    $a -= $v2;
+    is(~($v1 - $v2), ~$a, "+= works");
 }
 
 #lengths
@@ -82,18 +82,18 @@ for @vectors -> $v
 
 for @vectors -> $v
 {
-    my Vector $vn = $v V* 4.5;
+    my Vector $vn = $v * 4.5;
     is_approx($vn.Length, $v.Length * 4.5, "Scalar by Vector multiply gets proper length");
     is_approx_vector($vn.Unitize, $v.Unitize, "Scalar by Vector multiply gets proper direction");
-    is_approx_vector($vn, 4.5 V* $v, "Scalar by Vector multiply is commutative");
+    is_approx_vector($vn, 4.5 * $v, "Scalar by Vector multiply is commutative");
 }
 
 for @vectors -> $v
 {
-    my Vector $vn = $v V/ 4.5;
+    my Vector $vn = $v / 4.5;
     is_approx($vn.Length, $v.Length / 4.5, "Vector by Scalar divide gets proper length");
     is_approx_vector($vn.Unitize, $v.Unitize, "Vector by Scalar divide gets proper direction");
-    is_approx_vector($vn, $v V* (1.0 / 4.5), "Vector by Scalar divide is equal to multiplication by reciprocal");
+    is_approx_vector($vn, $v * (1.0 / 4.5), "Vector by Scalar divide is equal to multiplication by reciprocal");
 }
 
 #dot product tests
@@ -102,13 +102,13 @@ is_approx($v7 dot $v8, 0, "Perpendicular vectors have 0 dot product");
 for ($v1, $v2, $v3) X ($v1, $v2, $v3) -> $x, $y
 {
     is_approx($x ⋅ $y, $y ⋅ $x, "x ⋅ y = y ⋅ x");
-    is_approx($x ⋅ ($y V+ $v3), ($x ⋅ $y) + ($x ⋅ $v3), "x ⋅ (y + v3) = x ⋅ y + x ⋅ v3");
+    is_approx($x ⋅ ($y + $v3), ($x ⋅ $y) + ($x ⋅ $v3), "x ⋅ (y + v3) = x ⋅ y + x ⋅ v3");
 }
 
 for ($v5, $v6) X ($v5, $v6) -> $x, $y
 {
     is_approx($x ⋅ $y, $y ⋅ $x, "x ⋅ y = y ⋅ x");
-    is_approx($x ⋅ ($y V+ $v6), ($x ⋅ $y) + ($x ⋅ $v6), "x ⋅ (y + v6) = x ⋅ y + x ⋅ v3");
+    is_approx($x ⋅ ($y + $v6), ($x ⋅ $y) + ($x ⋅ $v6), "x ⋅ (y + v6) = x ⋅ y + x ⋅ v3");
 }
 
 dies_ok( { $v5 ⋅ $v7 }, "You can't do dot products of different dimensions");
@@ -131,7 +131,7 @@ for ($v1, $v2, $v3) X ($v1, $v2, $v3) -> $x, $y
     my $cross = $x × $y;
     is_approx($cross ⋅ $x, 0, "(x × y) ⋅ x = 0");
     is_approx($cross ⋅ $y, 0, "(x × y) ⋅ y = 0");
-    is_approx_vector($cross, V-($y × $x), "x × y = -y × x");
+    is_approx_vector($cross, -($y × $x), "x × y = -y × x");
     is_approx($cross.Length ** 2, $x.Length ** 2 * $y.Length ** 2 - ($x ⋅ $y) ** 2, 
               "|x × y|^2 = |x|^2 * |y|^2 - (x ⋅ y)^2");
 }
@@ -141,7 +141,7 @@ for ($v7, $v8, $v9, $v10) X ($v7, $v8, $v9, $v10) -> $x, $y
     my $cross = $x × $y;
     is_approx($cross ⋅ $x, 0, "(x × y) ⋅ x = 0");
     is_approx($cross ⋅ $y, 0, "(x × y) ⋅ y = 0");
-    is_approx_vector($cross, V-($y × $x), "x × y = -y × x");
+    is_approx_vector($cross, -($y × $x), "x × y = -y × x");
     is_approx($cross.Length ** 2, $x.Length ** 2 * $y.Length ** 2 - ($x ⋅ $y) ** 2, 
               "|x × y|^2 = |x|^2 * |y|^2 - (x ⋅ y)^2");
 }
@@ -161,18 +161,18 @@ dies_ok( { $v5 cross $v6 }, "You can't do 5D cross products");
 # UnitVector tests
 {
     my UnitVector $a = Vector.new(1, 0, 0);
-    isa_ok($a, UnitVector, "Variable is of type UnitVector");
+#    isa_ok($a, UnitVector, "Variable is of type UnitVector"); 
     isa_ok($a, Vector, "Variable is of type Vector");
 }
 {
     my UnitVector $a = UnitVector.new(1, 0, 0);
     my $b = $a;
-    $b V+= $v2;
-    is_approx_vector($a V+ $v2, $b, "+= works on UnitVector");
+    $b += $v2;
+    is_approx_vector($a + $v2, $b, "+= works on UnitVector");
 }
 {
     my UnitVector $a = Vector.new(1, 0, 0);
-    dies_ok( { $a V+= $v2; }, "Catch if += violates the UnitVector constraint");
+    dies_ok( { $a += $v2; }, "Catch if += violates the UnitVector constraint");
 }
 
 class VectorWithLength is Vector

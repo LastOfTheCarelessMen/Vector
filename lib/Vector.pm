@@ -61,37 +61,32 @@ class Vector is also
     }
 }
 
-# SHOULD: change this back to normal + when Rakudo supports that
-multi sub infix:<V+>(Vector $a, Vector $b where { $a.Dim == $b.Dim })
+multi sub infix:<+>(Vector $a, Vector $b where { $a.Dim == $b.Dim })
 {
     Vector.new($a.coordinates »+« $b.coordinates);
 }
 
-# SHOULD: change this back to normal - when Rakudo supports that
-multi sub infix:<V->(Vector $a, Vector $b where { $a.Dim == $b.Dim })
+multi sub infix:<->(Vector $a, Vector $b where { $a.Dim == $b.Dim })
 {
     Vector.new($a.coordinates »-« $b.coordinates);
 }
 
-# SHOULD: change this back to normal - when Rakudo supports that
-multi sub prefix:<V->(Vector $a)
+multi sub prefix:<->(Vector $a)
 {
     Vector.new(0 <<-<< $a.coordinates);
 }
 
-# SHOULD: make this scalar * Vector operator - when Rakudo supports
-multi sub infix:<V*>(Vector $a, $b)
+multi sub infix:<*>(Vector $a, $b)
 {
     Vector.new($a.coordinates >>*>> $b);
 }
 
-multi sub infix:<V*>($a, Vector $b)
+multi sub infix:<*>($a, Vector $b)
 {
     Vector.new($a <<*<< $b.coordinates);
 }
 
-# SHOULD: Vector / Scalar operator - when Rakudo supports
-multi sub infix:<V/>(Vector $a, $b)
+multi sub infix:</>(Vector $a, $b)
 {
     Vector.new($a.coordinates >>/>> $b);
 }
@@ -139,4 +134,5 @@ multi sub circumfix:<⎡ ⎤>(Vector $a)
 }
 
 subset UnitVector of Vector where { (1 - 1e-10) < $^v.Length < (1 + 1e-10) };
+
 

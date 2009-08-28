@@ -1,6 +1,3 @@
-Switch V+, V-, V*, and V/ to +, -, *, and /. (Waiting on Rakudobug to make
-this work.)
-
 Add some form of [] operator to Vector to allow easy access to the coordinate
 values.  (This may also be a Rakudobug?)
 
