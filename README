@@ -2,16 +2,18 @@ This is a simple attempt to create a working Vector class. I initially set out
 to support 3D vectors, but it turned out to be easier to support vectors of
 any dimension.
 
-Test.pm is borrowed from Rakudo, as it is easiest to have a local copy.
+Vector requires Rakudo from 8/28/2009 or later.
 
-Thanks to code from masak and mberends, Vector now has a configuration system.
-To set things up:
+Configure.pm is borrowed from proto, as it is easiest to have a local copy for
+now. Thanks to code from masak and mberends, Vector now has a configuration
+system. To set things up:
 
-   PERL6LIB=$PERL6LIB:lib ./Configure  # May need to run via your Perl 6 
-									   # installation, if just plain #!perl6 
-									   # doesn't work
-   make
-   make test 
+	cd Vector
+   	PERL6LIB=$PERL6LIB:lib ./Configure  # May need to run via your Perl 6 
+	 								    # installation, if just plain #!perl6 
+									    # doesn't work
+   	make
+    make test 
 
 If you have questions or comments, I can be reached at
 
