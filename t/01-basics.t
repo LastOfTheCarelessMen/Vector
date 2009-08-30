@@ -78,6 +78,7 @@ for @vectors -> $v
 {
     is_approx($v.Length ** 2, ⎡$v ⎤ * ⎡$v ⎤, "v.Length squared equals ⎡v ⎤ squared");
     is_approx($v.Length ** 2, $v ⋅ $v, "v.Length squared equals v ⋅ v");
+    # is_approx(abs($v) ** 2, $v ⋅ $v, "abs(v) squared equals v ⋅ v");
 }
 
 for @vectors -> $v
@@ -175,6 +176,11 @@ dies_ok( { $v5 cross $v6 }, "You can't do 5D cross products");
     dies_ok( { $a += $v2; }, "Catch if += violates the UnitVector constraint");
 }
 
+# test prefix plus
+# isa_ok(+$v1, Vector, "Prefix + works on the Vector class");
+dies_ok( { $v1.Num; }, "Make sure .Num does not work on 3D vector");
+
+# test extensions
 class VectorWithLength is Vector
 {
     has $.length;

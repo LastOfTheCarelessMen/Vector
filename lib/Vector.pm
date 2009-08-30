@@ -61,6 +61,11 @@ class Vector is also
     }
 }
 
+# multi sub prefix:<+>(Vector $a)
+# {
+#     $a;
+# }
+
 multi sub infix:<+>(Vector $a, Vector $b where { $a.Dim == $b.Dim })
 {
     Vector.new($a.coordinates »+« $b.coordinates);
