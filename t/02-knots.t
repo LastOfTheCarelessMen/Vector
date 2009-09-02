@@ -28,6 +28,22 @@ multi sub N(@u, $i, $p, $u)
     + (@u[$i + $p + 1] - $u) O/ (@u[$i + $p + 1] - @u[$i + 1]) * N(@u, $i + 1, $p - 1, $u);
 }
 
+multi sub RangeOfSize($a, $b, $size)
+{
+    my $delta = ($b - $a) / ($size - 1);
+    my $value = $a; 
+    return gather
+    {
+        loop (my $i = 0; $i + 1 < $size; $i++)
+        {
+            my $result = $value;
+            take $result;
+            $value += $delta;
+        }
+        take $b;
+    }
+}
+
 my @knots = (0, 0, 1, 1);
 is_approx(N(@knots, 0, 0, -1), 0, "Before first knot is 0");
 is_approx(N(@knots, 0, 0, 0), 0, "At first knot is 0");
@@ -46,5 +62,13 @@ is_approx(N(@knots, 2, 0, 0), 0, "At first knot is 0");
 is_approx(N(@knots, 2, 0, .25), 0, "Between knots is 0");
 is_approx(N(@knots, 2, 0, 1), 0, "At last knot is 0");
 is_approx(N(@knots, 2, 0, 2), 0, "After last knot is 0");
+
+is_approx(N(@knots, 0, 1, -1), 0, "Before first knot is 0");
+is_approx(N(@knots, 1, 1, -1), 0, "Before first knot is 0");
+for RangeOfSize(0.0, 1.0, 10) -> $u
+{
+    is_approx(N(@knots, 0, 1, $u), $u, "At $u is $u");
+    is_approx(N(@knots, 1, 1, $u), 1 - $u, "At $u is {1 - $u}");
+}
 
 done_testing;
