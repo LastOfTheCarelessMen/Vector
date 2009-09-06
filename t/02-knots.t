@@ -63,12 +63,14 @@ is_approx(N(@knots, 2, 0, .25), 0, "Between knots is 0");
 is_approx(N(@knots, 2, 0, 1), 0, "At last knot is 0");
 is_approx(N(@knots, 2, 0, 2), 0, "After last knot is 0");
 
-is_approx(N(@knots, 0, 1, -1), 0, "Before first knot is 0");
-is_approx(N(@knots, 1, 1, -1), 0, "Before first knot is 0");
+is_approx(N(@knots, 0, 1, -1), 0, "N_0_1(-1) is 0");
+is_approx(N(@knots, 1, 1, -1), 0, "N_1_1(-1) is 0");
 for RangeOfSize(0.0, 0.9999, 10) -> $u
 {
     is_approx(N(@knots, 0, 1, $u), 1 - $u, "N_0_1($u) is {1 - $u}");
     is_approx(N(@knots, 1, 1, $u), $u, "N_1_1($u) is $u got {N(@knots, 1, 1, $u)}");
 }
+is_approx(N(@knots, 0, 1, 1), 0, "N_0_1(1) is 0 (because left hand math)");
+is_approx(N(@knots, 1, 1, 1), 0, "N_1_1(1) is 0 (because left hand math)");
 
 done_testing;
