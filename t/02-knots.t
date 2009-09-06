@@ -4,28 +4,28 @@ use Test;
 
 plan *;
 
+enum KnotBasisDirection <Left Right>;
+
 sub infix:<O/>($a, $b)
 {
     return 0 if abs($b) < 1e-10;
     return $a / $b;
 }
 
-multi sub N(@u, $i, $p where { $p == 0 }, $u)
+multi sub N(@u, $i, $p where { $p == 0 }, $u, KnotBasisDirection $direction = Left)
 {
-    if @u[$i] <= $u < @u[$i + 1]
+    given $direction
     {
-        return 1;
+        when Left { return 1 if @u[$i] <= $u < @u[$i + 1]; }
+        when Right { return 1 if @u[$i] < $u <= @u[$i + 1]; }
     }
-    else
-    {
-        return 0;
-    }
+    return 0;
 }
 
-multi sub N(@u, $i, $p, $u)
+multi sub N(@u, $i, $p, $u, KnotBasisDirection $direction = Left)
 {
-    (($u - @u[$i]) O/ (@u[$i + $p] - @u[$i])) * N(@u, $i, $p - 1, $u)
-    + ((@u[$i + $p + 1] - $u) O/ (@u[$i + $p + 1] - @u[$i + 1])) * N(@u, $i + 1, $p - 1, $u);
+    (($u - @u[$i]) O/ (@u[$i + $p] - @u[$i])) * N(@u, $i, $p - 1, $u, $direction)
+    + ((@u[$i + $p + 1] - $u) O/ (@u[$i + $p + 1] - @u[$i + 1])) * N(@u, $i + 1, $p - 1, $u, $direction);
 }
 
 multi sub RangeOfSize($a, $b, $size)
@@ -65,12 +65,22 @@ is_approx(N(@knots, 2, 0, 2), 0, "After last knot is 0");
 
 is_approx(N(@knots, 0, 1, -1), 0, "N_0_1(-1) is 0");
 is_approx(N(@knots, 1, 1, -1), 0, "N_1_1(-1) is 0");
-for RangeOfSize(0.0, 0.9999, 10) -> $u
+is_approx(N(@knots, 0, 1, 0), 1, "N_0_1(-1) is 1 (left hand math)");
+is_approx(N(@knots, 1, 1, 0), 0, "N_1_1(-1) is 0 (left hand math)");
+is_approx(N(@knots, 0, 1, 0, Right), 0, "N_0_1(-1) is 0 (right hand math)");
+is_approx(N(@knots, 1, 1, 0, Right), 0, "N_1_1(-1) is 0 (right hand math)");
+for RangeOfSize(0.0001, 0.9999, 10) -> $u
 {
     is_approx(N(@knots, 0, 1, $u), 1 - $u, "N_0_1($u) is {1 - $u}");
     is_approx(N(@knots, 1, 1, $u), $u, "N_1_1($u) is $u got {N(@knots, 1, 1, $u)}");
+    is_approx(N(@knots, 0, 1, $u, Right), N(@knots, 0, 1, $u, Left), "right hand agrees with left hand");
+    is_approx(N(@knots, 1, 1, $u, Right), N(@knots, 1, 1, $u, Left), "right hand agrees with left hand");
 }
-is_approx(N(@knots, 0, 1, 1), 0, "N_0_1(1) is 0 (because left hand math)");
-is_approx(N(@knots, 1, 1, 1), 0, "N_1_1(1) is 0 (because left hand math)");
+is_approx(N(@knots, 0, 1, 1), 0, "N_0_1(1) is 0 (left hand math)");
+is_approx(N(@knots, 1, 1, 1), 0, "N_1_1(1) is 0 (left hand math)");
+is_approx(N(@knots, 0, 1, 1, Right), 0, "N_0_1(1) is 0 (right hand math)");
+is_approx(N(@knots, 1, 1, 1, Right), 1, "N_1_1(1) is 1 (right hand math)");
+is_approx(N(@knots, 0, 1, 2), 0, "N_0_1(2) is 0");
+is_approx(N(@knots, 1, 1, 2), 0, "N_1_1(2) is 0");
 
 done_testing;
