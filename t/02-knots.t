@@ -1,16 +1,8 @@
 use v6;
-# use KnotVector;
+use KnotVector;
 use Test;
 
 plan *;
-
-enum KnotBasisDirection <Left Right>;
-
-sub infix:<O/>($a, $b)
-{
-    return 0 if abs($b) < 1e-10;
-    return $a / $b;
-}
 
 multi sub N(@u, $i, $p where { $p == 0 }, $u, KnotBasisDirection $direction = Left)
 {
@@ -82,5 +74,11 @@ is_approx(N(@knots, 0, 1, 1, Right), 0, "N_0_1(1) is 0 (right hand math)");
 is_approx(N(@knots, 1, 1, 1, Right), 1, "N_1_1(1) is 1 (right hand math)");
 is_approx(N(@knots, 0, 1, 2), 0, "N_0_1(2) is 0");
 is_approx(N(@knots, 1, 1, 2), 0, "N_1_1(2) is 0");
+
+my $kv = KnotVector.new(@knots);
+is($kv.N(0, 0.5), (0..2).map({ N(@knots, $_, 0, 0.5) }), "KnotVector.N degree 0 matches test N");
+# my @knots_without_end = @.knots.delete((@.knots.elems - $p)..@.knots.end);
+
+
 
 done_testing;
