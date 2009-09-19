@@ -32,35 +32,35 @@ class KnotVector
     {
         my @N_prev = self.N($p - 1, $u, $direction);
         my $end = @.knots.end;
-                
-        # return 
+
+        # return
         # (
         #     (
-        #                              ($u «-« @.knots[0..($end - $p - 1)]) 
-        #                                  »O/« 
-        #         (@.knots[$p..($end - 1)] »-« @.knots[0..($end - $p - 1)])
-        #     ) 
+        #                              ($u «-« @.knots[0..($end - $p - 1)])
+        #                                  »/«
+        #         (@.knots[$p..($end - 1)] »-« @.knots[0..($end - $p - 1)]).map({abs($_) < 1e-10 ?? 1.0 !! $_})
+        #     )
         #     »*« 
         #     @N_prev[0..(@N_prev.end - 1)]
         # )
         # »+«
         # (
         #     (
-        #         (@.knots[($p + 1)..$end] »-» $u) 
-        #                                  »O/« 
-        #         (@.knots[($p + 1)..$end] »-« @.knots[1..($end - $p)])
-        #     ) 
+        #         (@.knots[($p + 1)..$end] »-» $u)
+        #                                  »/«
+        #         (@.knots[($p + 1)..$end] »-« @.knots[1..($end - $p)]).map({abs($_) < 1e-10 ?? 1.0 !! $_})
+        #     )
         #     »*« 
         #     @N_prev[1..(@N_prev.end)]
         # );
 
         my @left = (
             (
-                                     ($u <<-<< @.knots[0..($end - $p - 1)]) 
-                                         »/« 
+                                     ($u <<-<< @.knots[0..($end - $p - 1)])
+                                         »/«
                 (@.knots[$p..($end - 1)] »-« @.knots[0..($end - $p - 1)]).map({abs($_) < 1e-10 ?? 1.0 !! $_})
             ) 
-            »*« 
+            »*«
             @N_prev[0..(@N_prev.end - 1)]
         );
 
