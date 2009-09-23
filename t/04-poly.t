@@ -86,7 +86,11 @@ for ^10 -> $x
     is_approx($product.evaluate($x), 0.0, "sum * 0 = 0 for $x");
 }
 
-
+$product = $p * $p2;
+for ^10 -> $x
+{
+    is_approx($product.evaluate($x), $p.evaluate($x) * $p2.evaluate($x), "product = p * p2 for $x");
+}
 
 # say $p * Polynomial.new(0.0, 1.0);
 # say $p * $p;
