@@ -17,6 +17,16 @@ class KnotVector
         self.bless(*, knots => @u);
     }
     
+    our Str multi method Str() 
+    {
+        "(" ~ @.knots.join(', ') ~ ")";
+    }
+    
+    our Str multi method perl()
+    {
+        self.WHAT.perl ~ ".new((" ~ @.knots.map({.perl}).join(', ') ~ "))";        
+    }
+    
     multi method N(Int $p where { $p == 0 }, $u, KnotBasisDirection $direction = Left)
     {
         my $impluse_function;

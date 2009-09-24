@@ -76,6 +76,10 @@ is_approx(N(@knots, 0, 1, 2), 0, "N_0_1(2) is 0");
 is_approx(N(@knots, 1, 1, 2), 0, "N_1_1(2) is 0");
 
 my $kv = KnotVector.new(@knots);
+isa_ok($kv, KnotVector, "Variable is of type KnotVector");
+is(~eval($kv.perl), ~$kv, ".perl works, tested with Str");
+isa_ok(eval($kv.perl), KnotVector, ".perl works, tested with isa");
+
 is($kv.N(0, 0.5), (0..2).map({ N(@knots, $_, 0, 0.5) }), "KnotVector.N degree 0 matches test N");
 is($kv.N(1, 0.5), (0..1).map({ N(@knots, $_, 1, 0.5) }), "KnotVector.N degree 1 matches test N");
 

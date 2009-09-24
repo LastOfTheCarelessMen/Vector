@@ -1,6 +1,7 @@
 use v6;
 use Vector;
 use Polynomial;
+use KnotVector;
 
 my Vector $v1 = Vector.new(1,2,3);
 my Vector $v2 = Vector.new(3,4,5);
@@ -47,3 +48,6 @@ my $p3 = Polynomial.new();
 say $p3;
 say $p * Polynomial.new(0.0, 1.0);
 say $p * $p;
+
+my KnotVector $kv = KnotVector.new((0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 3));
+say $kv;
