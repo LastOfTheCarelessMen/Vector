@@ -13,6 +13,11 @@ class Nubs
         self.bless(*, degree => $degree, knot_vector => $kv, control_points => @control_points);
     }
     
+    our Str multi method perl()
+    {
+        self.WHAT.perl ~ ".new($.degree, {$.knot_vector.perl}, {@.control_points.perl})";        
+    }
+    
     method Evaluate($t)
     {
         my @N = $.knot_vector.N($.degree, $t);
