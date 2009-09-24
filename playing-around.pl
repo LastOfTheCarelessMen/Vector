@@ -50,4 +50,7 @@ say $p * Polynomial.new(0.0, 1.0);
 say $p * $p;
 
 my KnotVector $kv = KnotVector.new((0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 3));
-say $kv;
+say $kv.N(0, 0.5).perl;
+say $kv.N(1, 0.5).perl;
+say $kv.N(2, 0.5).perl;
+say $kv.N(3, 0.5).perl;
