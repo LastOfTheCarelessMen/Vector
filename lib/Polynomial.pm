@@ -4,8 +4,15 @@ class Polynomial
 {
     has @.coefficients;
     
-    multi method new (*@x) 
+    multi method new (*@x is copy) 
     {
+        while @x.elems > 1 && @x[*-1] == 0
+        {
+            say @x.perl;
+            say @x[*-1];
+            @x.pop;
+        }
+        
         if (@x.elems == 0)
         {
             self.bless(*, coefficients => 0);
@@ -16,8 +23,15 @@ class Polynomial
         }
     }
     
-    multi method new (@x) 
+    multi method new (@x is copy) 
     {
+        while @x.elems > 1 && @x[*-1] == 0
+        {
+            say @x.perl;
+            say @x[*-1];
+            @x.pop;
+        }
+        
         if (@x.elems == 0)
         {
             self.bless(*, coefficients => 0);
@@ -47,12 +61,7 @@ class Polynomial
 
 multi sub infix:<+>(Polynomial $a, Polynomial $b)
 {
-    my $length = ($a.coefficients.elems, $b.coefficients.elems).max;
-    my @ac = $a.coefficients;
-    @ac.push: (0 xx ($length - @ac.elems));
-    my @bc = $b.coefficients;
-    @bc.push: (0 xx ($length - @bc.elems));
-    return Polynomial.new(@ac »+« @bc);
+    return Polynomial.new(($a.coefficients, 0) <<+>> ($b.coefficients, 0));
 }
 
 multi sub infix:<+>(Polynomial $a, $b)
