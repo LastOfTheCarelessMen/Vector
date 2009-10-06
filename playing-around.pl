@@ -1,3 +1,5 @@
+BEGIN { @*INC.push: 'lib' }
+
 use v6;
 use Vector;
 use Polynomial;
