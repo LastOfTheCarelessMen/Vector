@@ -54,3 +54,5 @@ say $kv.N(0, 0.5).perl;
 say $kv.N(1, 0.5).perl;
 say $kv.N(2, 0.5).perl;
 say $kv.N(3, 0.5).perl;
+say $kv.Nnew(3, 0.5).perl;
+
