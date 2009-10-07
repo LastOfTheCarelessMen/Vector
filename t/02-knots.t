@@ -80,19 +80,12 @@ isa_ok($kv, KnotVector, "Variable is of type KnotVector");
 is(~eval($kv.perl), ~$kv, ".perl works, tested with Str");
 isa_ok(eval($kv.perl), KnotVector, ".perl works, tested with isa");
 
-is($kv.N(0, 0.5), (0..2).map({ N(@knots, $_, 0, 0.5) }), "KnotVector.N degree 0 matches test N");
 is($kv.N(1, 0.5), (0..1).map({ N(@knots, $_, 1, 0.5) }), "KnotVector.N degree 1 matches test N");
 
 my @knots2 = (0, 0, 0, 1, 2, 2, 2);
 $kv = KnotVector.new(@knots2);
-is($kv.N(0, 0.25), (0..5).map({ N(@knots2, $_, 0, 0.25) }), "KnotVector.N degree 0 matches test N");
-is($kv.N(1, 0.25), (0..4).map({ N(@knots2, $_, 1, 0.25) }), "KnotVector.N degree 1 matches test N");
 is($kv.N(2, 0.25), (0..3).map({ N(@knots2, $_, 2, 0.25) }), "KnotVector.N degree 2 matches test N");
-is($kv.N(0, 0.5), (0..5).map({ N(@knots2, $_, 0, 0.5) }), "KnotVector.N degree 0 matches test N");
-is($kv.N(1, 0.5), (0..4).map({ N(@knots2, $_, 1, 0.5) }), "KnotVector.N degree 1 matches test N");
 is($kv.N(2, 0.5), (0..3).map({ N(@knots2, $_, 2, 0.5) }), "KnotVector.N degree 2 matches test N");
-is($kv.N(0, 1.25), (0..5).map({ N(@knots2, $_, 0, 1.25) }), "KnotVector.N degree 0 matches test N");
-is($kv.N(1, 1.25), (0..4).map({ N(@knots2, $_, 1, 1.25) }), "KnotVector.N degree 1 matches test N");
 is($kv.N(2, 1.25), (0..3).map({ N(@knots2, $_, 2, 1.25) }), "KnotVector.N degree 2 matches test N");
 
 
