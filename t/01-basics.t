@@ -2,11 +2,6 @@ use v6;
 use Vector;
 use Test;
 
-sub is_approx_vector(Vector $a, Vector $b, $desc)
-{
-    ok(($a - $b).Length < 0.00001, $desc);
-}
-
 plan *;
 
 my $v1 = Vector.new(1, 2, 3);
@@ -85,16 +80,16 @@ for @vectors -> $v
 {
     my Vector $vn = $v * 4.5;
     is_approx($vn.Length, $v.Length * 4.5, "Scalar by Vector multiply gets proper length");
-    is_approx_vector($vn.Unitize, $v.Unitize, "Scalar by Vector multiply gets proper direction");
-    is_approx_vector($vn, 4.5 * $v, "Scalar by Vector multiply is commutative");
+    is_approx($vn.Unitize, $v.Unitize, "Scalar by Vector multiply gets proper direction");
+    is_approx($vn, 4.5 * $v, "Scalar by Vector multiply is commutative");
 }
 
 for @vectors -> $v
 {
     my Vector $vn = $v / 4.5;
     is_approx($vn.Length, $v.Length / 4.5, "Vector by Scalar divide gets proper length");
-    is_approx_vector($vn.Unitize, $v.Unitize, "Vector by Scalar divide gets proper direction");
-    is_approx_vector($vn, $v * (1.0 / 4.5), "Vector by Scalar divide is equal to multiplication by reciprocal");
+    is_approx($vn.Unitize, $v.Unitize, "Vector by Scalar divide gets proper direction");
+    is_approx($vn, $v * (1.0 / 4.5), "Vector by Scalar divide is equal to multiplication by reciprocal");
 }
 
 #dot product tests
@@ -132,7 +127,7 @@ for ($v1, $v2, $v3) X ($v1, $v2, $v3) -> $x, $y
     my $cross = $x × $y;
     is_approx($cross ⋅ $x, 0, "(x × y) ⋅ x = 0");
     is_approx($cross ⋅ $y, 0, "(x × y) ⋅ y = 0");
-    is_approx_vector($cross, -($y × $x), "x × y = -y × x");
+    is_approx($cross, -($y × $x), "x × y = -y × x");
     is_approx($cross.Length ** 2, $x.Length ** 2 * $y.Length ** 2 - ($x ⋅ $y) ** 2, 
               "|x × y|^2 = |x|^2 * |y|^2 - (x ⋅ y)^2");
 }
@@ -142,7 +137,7 @@ for ($v7, $v8, $v9, $v10) X ($v7, $v8, $v9, $v10) -> $x, $y
     my $cross = $x × $y;
     is_approx($cross ⋅ $x, 0, "(x × y) ⋅ x = 0");
     is_approx($cross ⋅ $y, 0, "(x × y) ⋅ y = 0");
-    is_approx_vector($cross, -($y × $x), "x × y = -y × x");
+    is_approx($cross, -($y × $x), "x × y = -y × x");
     is_approx($cross.Length ** 2, $x.Length ** 2 * $y.Length ** 2 - ($x ⋅ $y) ** 2, 
               "|x × y|^2 = |x|^2 * |y|^2 - (x ⋅ y)^2");
 }
@@ -156,7 +151,7 @@ dies_ok( { $v5 cross $v6 }, "You can't do 5D cross products");
 {
     my $a = $v1;
     $a ×= $v2;
-    is_approx_vector($v1 × $v2, $a, "×= works");
+    is_approx($v1 × $v2, $a, "×= works");
 }
 
 # UnitVector tests
@@ -169,7 +164,7 @@ dies_ok( { $v5 cross $v6 }, "You can't do 5D cross products");
     my UnitVector $a = UnitVector.new(1, 0, 0);
     my $b = $a;
     $b += $v2;
-    is_approx_vector($a + $v2, $b, "+= works on UnitVector");
+    is_approx($a + $v2, $b, "+= works on UnitVector");
 }
 {
     my UnitVector $a = Vector.new(1, 0, 0);

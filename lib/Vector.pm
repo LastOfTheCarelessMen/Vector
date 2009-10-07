@@ -47,6 +47,11 @@ class Vector is also
         sqrt(self ⋅ self);
     }
     
+    multi method abs()
+    {
+        self.Length;
+    }
+        
     method Unitize()
     {
         my $length = self.Length;
