@@ -6,8 +6,10 @@ plan *;
 
 my @array = (1, 2, 2, 3, 4, 5, 5, 5, 5, 6, 7, 8);
 
-say [<=] @array;
-ok([<=] @array, "array is sorted properly");
+# should be possible to do this in one line, but there seems
+# to be a rakudobug.
+my Object $cond = [<=] @array;
+ok($cond, "array is sorted properly");
 
 for (0.5, 1.5, 2, 2.5, 3, 3.5, 4, 5.5, 6, 8) -> $x
 {
@@ -27,3 +29,5 @@ for (1.5, 2, 2.5, 3, 3.5, 4, 5.5, 6) -> $x
 
 is(LowerBound(@array, 8), @array.elems - 1, "Equal to the big end returns max_index");
 is(LowerBound(@array, 8.5), @array.elems, "Off the big end returns max_index + 1");
+
+done_testing;
