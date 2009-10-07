@@ -27,8 +27,8 @@ class Polynomial
     {
         while @x.elems > 1 && @x[*-1] == 0
         {
-            say @x.perl;
-            say @x[*-1];
+            # say @x.perl;
+            # say @x[*-1];
             @x.pop;
         }
         
