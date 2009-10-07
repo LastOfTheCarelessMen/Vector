@@ -1,6 +1,7 @@
+use v6;
+
 BEGIN { @*INC.push: 'lib' }
 
-use v6;
 use Vector;
 use Polynomial;
 use KnotVector;
@@ -52,11 +53,7 @@ say $p * Polynomial.new(0.0, 1.0);
 say $p * $p;
 
 my KnotVector $kv = KnotVector.new((0, 0, 0, 0, 1, 2, 2, 3, 3, 3, 3));
-say $kv.N(0, 0.5).perl;
-say $kv.N(1, 0.5).perl;
-say $kv.N(2, 0.5).perl;
-say $kv.N(3, 0.5).perl;
-say $kv.Nnew(3, 1/2).perl;
+say $kv.N(3, 1/2).perl;
 my @polys = $kv.N_local($kv.N0_index(1/2), 3, Polynomial.new(0, 1));
 @polys.map({ $_.say });
 @polys.map({ $_.evaluate(1/2).perl.say });
