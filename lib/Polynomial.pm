@@ -112,12 +112,12 @@ multi sub infix:<*>(Polynomial $a, Polynomial $b)
     return Polynomial.new(@coef);
 }
 
-multi sub infix:<*>(Polynomial $a, $b)
+multi sub infix:<*>(Polynomial $a, $b) is default
 {
     Polynomial.new($a.coefficients >>*>> $b);
 }
 
-multi sub infix:<*>($b, Polynomial $a)
+multi sub infix:<*>($b, Polynomial $a) is default
 {
     Polynomial.new($a.coefficients >>*>> $b);
 }
