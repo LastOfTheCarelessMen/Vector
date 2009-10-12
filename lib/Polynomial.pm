@@ -6,7 +6,7 @@ class Polynomial
     
     multi method new (*@x is copy) 
     {
-        while @x.elems > 1 && @x[*-1] == 0
+        while @x.elems > 1 && @x[*-1].abs < 1e-13
         {
             say @x.perl;
             say @x[*-1];
@@ -25,7 +25,7 @@ class Polynomial
     
     multi method new (@x is copy) 
     {
-        while @x.elems > 1 && @x[*-1] == 0
+        while @x.elems > 1 && @x[*-1].abs < 1e-13
         {
             # say @x.perl;
             # say @x[*-1];
@@ -45,7 +45,6 @@ class Polynomial
     our Str multi method Str() 
     {
        (^(@.coefficients.elems)).map({"{@.coefficients[$_]} x^$_"}).reverse.join(" + ");
-        # (^3).map({"{@.coefficients[$_]} x^$_"}).reverse.join(" + ");
     }
     
     our Str multi method perl()
@@ -61,7 +60,20 @@ class Polynomial
 
 multi sub infix:<+>(Polynomial $a, Polynomial $b)
 {
-    return Polynomial.new(($a.coefficients, 0) <<+>> ($b.coefficients, 0));
+    my $lct = 0;
+    my @leftover = ();
+    given $a.coefficients.elems <=> $b.coefficients.elems
+    {
+        when -1 { $lct = $a.coefficients.elems - 1; @leftover = $b.coefficients[($lct+1)..(*-1)]; }
+        when +1 { $lct = $b.coefficients.elems - 1; @leftover = $a.coefficients[($lct+1)..(*-1)]; }
+        when 0 { $lct = $b.coefficients.elems - 1; }
+    }
+    # say "a: {$a.coefficients}";
+    # say "b: {$b.coefficients}";
+    # say "c: {$a.coefficients[0..$lct].perl}";
+    # say "d: {$b.coefficients[0..$lct].perl}";
+    # say "e: {@leftover.perl}";
+    return Polynomial.new($a.coefficients[0..$lct] >>+<< $b.coefficients[0..$lct], @leftover);
 }
 
 multi sub infix:<+>(Polynomial $a, $b)
