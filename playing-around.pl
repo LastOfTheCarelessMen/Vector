@@ -58,3 +58,5 @@ my @polys = $kv.N_local($kv.N0_index(1/2), 3, Polynomial.new(0, 1));
 @polys.map({ $_.say });
 @polys.map({ $_.evaluate(1/2).perl.say });
 
+my Vector $vcrazy = Vector.new(Vector.new(1, 2, 3), Vector.new(-1, 0, -1));
+say 23.3 * $vcrazy;
