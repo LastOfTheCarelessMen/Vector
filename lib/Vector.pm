@@ -24,6 +24,11 @@ class Vector
         self.WHAT.perl ~ ".new(" ~ @.coordinates.map({.perl}).join(', ') ~ ")";        
     }
     
+    multi method Num()
+    {
+        die "Cannot call Num on Vector!";
+    }
+    
     method Dim()
     {
         @.coordinates.elems;
