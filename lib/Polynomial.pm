@@ -90,7 +90,7 @@ multi sub infix:<+>($b, Polynomial $a)
 
 multi sub prefix:<->(Polynomial $a)
 {
-    Polynomial.new(0 <<-<< $a.coefficients);
+    Polynomial.new($a.coefficients.map({-$_}));
 }
 
 multi sub infix:<->(Polynomial $a, Polynomial $b)
