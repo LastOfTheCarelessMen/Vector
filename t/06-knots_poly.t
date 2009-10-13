@@ -40,17 +40,23 @@ my Nubs $nubs = Nubs.new(3, $kv, @control_points);
 my @polys = Polynomial.new(0) xx 7;
 my $n0 = $kv.N0_index(1/2);
 @polys[($n0 - 4) .. ($n0 - 1)] = $kv.N_local($n0, 3, Polynomial.new(0, 1));
-
-my @temp = (@polys >>*<< @control_points);
-# say "by the first hurdle";
-# @temp>>.say;
-my $poly = [+] @temp;
+my $poly = [+] (@polys >>*<< @control_points);
 
 for (-1, -1/2, 0, 1/2) -> $t
 {
-    my @values = @polys>>.evaluate($t);
-    my $value = [+] (@values >>*<< @control_points);
-    is_approx($value, $nubs.Evaluate($t), "Polynomial evaluation and sum == Nubs evaluation");
+    is_approx($poly.evaluate($t), $nubs.Evaluate($t), "Polynomial sum and evaluation == Nubs evaluation");
 }
+
+@polys = Polynomial.new(0) xx 7;
+$n0 = $kv.N0_index(5/2);
+@polys[($n0 - 4) .. ($n0 - 1)] = $kv.N_local($n0, 3, Polynomial.new(0, 1));
+$poly = [+] (@polys >>*<< @control_points);
+
+for (2.1, 5/2, 2.74) -> $t
+{
+    is_approx($poly.evaluate($t), $nubs.Evaluate($t), "Polynomial sum and evaluation == Nubs evaluation");
+}
+
+
 
 done_testing;
