@@ -28,12 +28,12 @@ class KnotVector
         self.WHAT.perl ~ ".new((" ~ @.knots.map({.perl}).join(', ') ~ "))";        
     }
         
-    multi method N0_index($u, KnotBasisDirection $direction = Left)
+    multi method N0_index(Int $p, $u, KnotBasisDirection $direction = Left)
     {
         given $direction
         {
-            when Left { LowerBound(@.knots, $u); }
-            when Right { UpperBound(@.knots, $u); }
+            when Left { UpperBound(@.knots, $u) - $p - 1; }
+            when Right { LowerBound(@.knots, $u) - $p - 1; }
         }
     }
     
@@ -41,15 +41,13 @@ class KnotVector
     {
         my @N_prev = 0 xx $p, 1, 0;
         my @N = 0 xx ($p + 2);
-        
-        my $n0p = $n0 - $p - 1;
-        
+                
         for 1..$p -> $q
         {
             for ($p - $q)...($p) -> $i
             {
-                @N[$i] = (($u - @.knots[$n0p + $i]) O/ (@.knots[$n0p + $i + $q] - @.knots[$n0p + $i])) * @N_prev[$i]
-                + ((@.knots[$n0p + $i + $q + 1] - $u) O/ (@.knots[$n0p + $i + $q + 1] - @.knots[$n0p + $i + 1])) * @N_prev[$i + 1];
+                @N[$i] = (($u - @.knots[$n0 + $i]) O/ (@.knots[$n0 + $i + $q] - @.knots[$n0 + $i])) * @N_prev[$i]
+                + ((@.knots[$n0 + $i + $q + 1] - $u) O/ (@.knots[$n0 + $i + $q + 1] - @.knots[$n0 + $i + 1])) * @N_prev[$i + 1];
             }
             @N_prev = @N;
         }
@@ -60,9 +58,9 @@ class KnotVector
     
     multi method N(Int $p, $u, KnotBasisDirection $direction = Left)
     {
-        my $n0 = self.N0_index($u, $direction);
+        my $n0 = self.N0_index($p, $u, $direction);
         my @N = 0 xx (@.knots.elems - $p - 1);
-        @N[($n0-$p-1)..($n0-1)] = self.N_local($n0, $p, $u, $direction);
+        @N[($n0)..($n0 + $p)] = self.N_local($n0, $p, $u, $direction);
         return @N;
     }
 }
