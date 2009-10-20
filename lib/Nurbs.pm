@@ -1,7 +1,6 @@
 use v6;
 use KnotVector;
 use Vector;
-use Polynomial;
 
 class Nubs
 {
@@ -26,10 +25,10 @@ class Nubs
                     >>*<< @.control_points[$n0 .. ($n0 + $.degree)]);
     }
     
-    multi method MakePolynomial($t)
+    multi method Evaluate($base_t, $actual_t)
     {
-        my $n0 = $.knot_vector.N0_index($.degree, $t);
-        return [+] ($.knot_vector.N_local($n0, $.degree, Polynomial.new(0, 1)) 
+        my $n0 = $.knot_vector.N0_index($.degree, $base_t);
+        return [+] ($.knot_vector.N_local($n0, $.degree, $actual_t) 
                     >>*<< @.control_points[$n0 .. ($n0 + $.degree)]);
     }
 }
