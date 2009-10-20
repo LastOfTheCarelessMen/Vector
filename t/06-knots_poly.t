@@ -32,25 +32,17 @@ my @control_points = (Vector.new(0, 0, 0),
 }
 
 # Okay, now test the KnotVector plus Vector plus Polynomial craziness
- 
+
 my KnotVector $kv = KnotVector.new((-1, -1, -1, -1, 1, 2, 2, 3, 3, 3, 3));
-
 my Nubs $nubs = Nubs.new(3, $kv, @control_points);
-
-my @polys = Polynomial.new(0) xx 7;
-my $n0 = $kv.N0_index(1/2);
-@polys[($n0 - 4) .. ($n0 - 1)] = $kv.N_local($n0, 3, Polynomial.new(0, 1));
-my $poly = [+] (@polys >>*<< @control_points);
+my $poly = $nubs.MakePolynomial(1/2);
 
 for (-1, -1/2, 0, 1/2) -> $t
 {
     is_approx($poly.evaluate($t), $nubs.Evaluate($t), "Polynomial sum and evaluation == Nubs evaluation");
 }
 
-@polys = Polynomial.new(0) xx 7;
-$n0 = $kv.N0_index(5/2);
-@polys[($n0 - 4) .. ($n0 - 1)] = $kv.N_local($n0, 3, Polynomial.new(0, 1));
-$poly = [+] (@polys >>*<< @control_points);
+$poly = $nubs.MakePolynomial(5/2);
 
 for (2.1, 5/2, 2.74) -> $t
 {
