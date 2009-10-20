@@ -80,13 +80,29 @@ isa_ok($kv, KnotVector, "Variable is of type KnotVector");
 is(~eval($kv.perl), ~$kv, ".perl works, tested with Str");
 isa_ok(eval($kv.perl), KnotVector, ".perl works, tested with isa");
 
+is($kv.N0_index(1, 0.0), 0, "KnotVector.N0_index(0.0) == 0");
+is($kv.N0_index(1, 0.5), 0, "KnotVector.N0_index(0.5) == 0");
+
+is($kv.N(1, 0.0), (1, 0), "KnotVector.N degree 1 at 0 == (1, 0)");
+is($kv.N(1, 1.0, Right), (0, 1), "KnotVector.N degree 1 at 1 (Right) == (0, 1)");
+
 is($kv.N(1, 0.5), (0..1).map({ N(@knots, $_, 1, 0.5) }), "KnotVector.N degree 1 matches test N");
+is($kv.N(1, 0.5, Right), (0..1).map({ N(@knots, $_, 1, 0.5) }), "KnotVector.N degree 1 matches test N (Right)");
 
 my @knots2 = (0, 0, 0, 1, 2, 2, 2);
 $kv = KnotVector.new(@knots2);
-is($kv.N(2, 0.25), (0..3).map({ N(@knots2, $_, 2, 0.25) }), "KnotVector.N degree 2 matches test N");
-is($kv.N(2, 0.5), (0..3).map({ N(@knots2, $_, 2, 0.5) }), "KnotVector.N degree 2 matches test N");
-is($kv.N(2, 1.25), (0..3).map({ N(@knots2, $_, 2, 1.25) }), "KnotVector.N degree 2 matches test N");
+is($kv.N(2, 0.0), (0..3).map({ N(@knots2, $_, 2, 0.0) }), "KnotVector.N degree 2 matches test N for 0.0");
+is($kv.N(2, 0.25), (0..3).map({ N(@knots2, $_, 2, 0.25) }), "KnotVector.N degree 2 matches test N for 0.25");
+is($kv.N(2, 0.5), (0..3).map({ N(@knots2, $_, 2, 0.5) }), "KnotVector.N degree 2 matches test N for 0.5");
+is($kv.N(2, 1.25), (0..3).map({ N(@knots2, $_, 2, 1.25) }), "KnotVector.N degree 2 matches test N for 1.25");
+is($kv.N(2, 0.25, Right), (0..3).map({ N(@knots2, $_, 2, 0.25) }), 
+   "KnotVector.N degree 2 matches test N for 0.25 from the Right");
+is($kv.N(2, 0.5, Right), (0..3).map({ N(@knots2, $_, 2, 0.5) }), 
+   "KnotVector.N degree 2 matches test N for 0.5 from the Right");
+is($kv.N(2, 1.25, Right), (0..3).map({ N(@knots2, $_, 2, 1.25) }), 
+   "KnotVector.N degree 2 matches test N for 1.25 from the Right");
+is($kv.N(2, 2.0, Right), (0..3).map({ N(@knots2, $_, 2, 2.0, Right) }), 
+   "KnotVector.N degree 2 matches test N for 2.0 from the Right");
 
 
 done_testing;
