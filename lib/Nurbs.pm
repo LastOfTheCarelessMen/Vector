@@ -21,22 +21,10 @@ class Nubs
     
     multi method Evaluate($t)
     {
-        my @N = $.knot_vector.N($.degree, $t);
-        return [+] (@N >>*<< @.control_points);
+        my $n0 = $.knot_vector.N0_index($.degree, $t);
+        return [+] ($.knot_vector.N_local($n0, $.degree, $t) 
+                    >>*<< @.control_points[$n0 .. ($n0 + $.degree)]);
     }
-    
-    # multi method Evaluate($t)
-    # {
-    #     say "Nubs.Evaluate";
-    #     my $n0 = $.knot_vector.N0_index($t);
-    #     say $n0;
-    #     say $.knot_vector.N(1, $t).perl;
-    #     say ($.knot_vector.N_local($n0, $.degree, $t)).perl;
-    #     say (@.control_points[($n0 - ($.degree + 1)) .. ($n0 - 1)]).perl;
-    #     return [+] ($.knot_vector.N_local($n0, $.degree, $t) 
-    #                 >>*<< @.control_points[($n0 - ($.degree + 1)) .. ($n0 - 1)]);
-    # }
-    
     
     multi method MakePolynomial($t)
     {
