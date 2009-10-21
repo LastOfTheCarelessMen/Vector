@@ -18,16 +18,16 @@ class Nubs
         self.WHAT.perl ~ ".new($.degree, {$.knot_vector.perl}, {@.control_points.perl})";        
     }
     
-    multi method Evaluate($t)
+    multi method Evaluate($t, KnotBasisDirection $direction = Left)
     {
-        my $n0 = $.knot_vector.N0_index($.degree, $t);
+        my $n0 = $.knot_vector.N0_index($.degree, $t, $direction);
         return [+] ($.knot_vector.N_local($n0, $.degree, $t) 
                     >>*<< @.control_points[$n0 .. ($n0 + $.degree)]);
     }
     
-    multi method Evaluate($base_t, $actual_t)
+    multi method Evaluate($base_t, $actual_t, KnotBasisDirection $direction = Left)
     {
-        my $n0 = $.knot_vector.N0_index($.degree, $base_t);
+        my $n0 = $.knot_vector.N0_index($.degree, $base_t, $direction);
         return [+] ($.knot_vector.N_local($n0, $.degree, $actual_t) 
                     >>*<< @.control_points[$n0 .. ($n0 + $.degree)]);
     }

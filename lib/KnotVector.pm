@@ -9,6 +9,23 @@ sub infix:<O/>($a, $b)
     return $a / $b;
 }
 
+# this one is handy for testing
+multi sub RangeOfSize($a, $b, $size)
+{
+    my $delta = ($b - $a) / ($size - 1);
+    my $value = $a; 
+    return gather
+    {
+        loop (my $i = 0; $i + 1 < $size; $i++)
+        {
+            my $result = $value;
+            take $result;
+            $value += $delta;
+        }
+        take $b;
+    }
+}
+
 class KnotVector
 {
     has @.knots;
@@ -37,7 +54,7 @@ class KnotVector
         }
     }
     
-    multi method N_local(Int $n0, Int $p, $u, KnotBasisDirection $direction = Left)
+    multi method N_local(Int $n0, Int $p, $u)
     {
         my @N_prev = 0 xx $p, 1, 0;
         my @N = 0 xx ($p + 2);
@@ -60,7 +77,7 @@ class KnotVector
     {
         my $n0 = self.N0_index($p, $u, $direction);
         my @N = 0 xx (@.knots.elems - $p - 1);
-        @N[($n0)..($n0 + $p)] = self.N_local($n0, $p, $u, $direction);
+        @N[($n0)..($n0 + $p)] = self.N_local($n0, $p, $u);
         return @N;
     }
 }

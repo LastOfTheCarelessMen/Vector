@@ -20,22 +20,6 @@ multi sub N(@u, $i, $p, $u, KnotBasisDirection $direction = Left)
     + ((@u[$i + $p + 1] - $u) O/ (@u[$i + $p + 1] - @u[$i + 1])) * N(@u, $i + 1, $p - 1, $u, $direction);
 }
 
-multi sub RangeOfSize($a, $b, $size)
-{
-    my $delta = ($b - $a) / ($size - 1);
-    my $value = $a; 
-    return gather
-    {
-        loop (my $i = 0; $i + 1 < $size; $i++)
-        {
-            my $result = $value;
-            take $result;
-            $value += $delta;
-        }
-        take $b;
-    }
-}
-
 my @knots = (0, 0, 1, 1);
 is_approx(N(@knots, 0, 0, -1), 0, "Before first knot is 0");
 is_approx(N(@knots, 0, 0, 0), 0, "At first knot is 0");
