@@ -52,6 +52,8 @@ for RangeOfSize(-1, 3, 10) -> $t
     my $direction = $t < 3 ?? Left !! Right;
     is_approx_vector $nubs3.evaluate($t, $direction), 
                      $nubs.evaluate($t, $direction) + $translation, 
+                     "\$nubs3.evaluate($t, {$direction.perl}) == \$nubs.evaluate($t, {$direction.perl}) + \$translation";
+    is_approx_vector $nubs3.evaluate($t), $nubs.evaluate($t) + $translation, 
                      "\$nubs3.evaluate($t) == \$nubs.evaluate($t) + \$translation";
 }
 
