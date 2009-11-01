@@ -23,16 +23,23 @@ class Nubs
         $.knot_vector.ParameterRange($.degree);
     }
     
-    multi method Evaluate($t, KnotBasisDirection $direction = Left)
+    # make this next one private?
+    multi method Direction($t, KnotBasisDirection $direction)
     {
-        my $n0 = $.knot_vector.N0_index($.degree, $t, $direction);
+        return $t < ([+] self.ParameterRange) / 2 ?? Left !! Right if ($direction == Reasonable);
+        return $direction;
+    }
+
+    multi method evaluate($t, KnotBasisDirection $direction = Reasonable)
+    {
+        my $n0 = $.knot_vector.N0_index($.degree, $t, self.Direction($t, $direction));
         return [+] ($.knot_vector.N_local($n0, $.degree, $t) 
                     >>*<< @.control_points[$n0 .. ($n0 + $.degree)]);
     }
     
-    multi method Evaluate($base_t, $actual_t, KnotBasisDirection $direction = Left)
+    multi method evaluate($base_t, $actual_t, KnotBasisDirection $direction = Reasonable)
     {
-        my $n0 = $.knot_vector.N0_index($.degree, $base_t, $direction);
+        my $n0 = $.knot_vector.N0_index($.degree, $base_t, self.Direction($base_t, $direction));
         return [+] ($.knot_vector.N_local($n0, $.degree, $actual_t) 
                     >>*<< @.control_points[$n0 .. ($n0 + $.degree)]);
     }

@@ -35,18 +35,18 @@ my @control_points = (Vector.new(0, 0, 0),
 
 my KnotVector $kv = KnotVector.new((-1, -1, -1, -1, 1, 2, 2, 3, 3, 3, 3));
 my Nubs $nubs = Nubs.new(3, $kv, @control_points);
-my $poly = $nubs.Evaluate(1/2, Polynomial.new(0, 1));
+my $poly = $nubs.evaluate(1/2, Polynomial.new(0, 1));
 
 for (-1, -1/2, 0, 1/2) -> $t
 {
-    is_approx($poly.evaluate($t), $nubs.Evaluate($t), "Polynomial sum and evaluation == Nubs evaluation");
+    is_approx($poly.evaluate($t), $nubs.evaluate($t), "Polynomial sum and evaluation == Nubs evaluation");
 }
 
-$poly = $nubs.Evaluate(5/2, Polynomial.new(0, 1));
+$poly = $nubs.evaluate(5/2, Polynomial.new(0, 1));
 
 for (2.1, 5/2, 2.74) -> $t
 {
-    is_approx($poly.evaluate($t), $nubs.Evaluate($t), "Polynomial sum and evaluation == Nubs evaluation");
+    is_approx($poly.evaluate($t), $nubs.evaluate($t), "Polynomial sum and evaluation == Nubs evaluation");
 }
 
 
