@@ -1,7 +1,7 @@
 use v6;
 use BinarySearch;
 
-enum KnotBasisDirection <Left Right>;
+enum KnotBasisDirection <Left Right Reasonable>;
 
 sub infix:<O/>($a, $b)
 {
@@ -51,6 +51,7 @@ class KnotVector
         {
             when Left { UpperBound(@.knots, $u) - $p - 1; }
             when Right { LowerBound(@.knots, $u) - $p - 1; }
+            when Reasonable { die "Must specify Left or Right for KnotBasisDirection"; }
         }
     }
     
@@ -79,5 +80,10 @@ class KnotVector
         my @N = 0 xx (@.knots.elems - $p - 1);
         @N[($n0)..($n0 + $p)] = self.N_local($n0, $p, $u);
         return @N;
+    }
+    
+    multi method ParameterRange(Int $p)
+    {
+        ($.knots[$p], $.knots[*-$p]);
     }
 }

@@ -69,6 +69,7 @@ is($kv.N0_index(1, 0.5), 0, "KnotVector.N0_index(0.5) == 0");
 
 is($kv.N(1, 0.0), (1, 0), "KnotVector.N degree 1 at 0 == (1, 0)");
 is($kv.N(1, 1.0, Right), (0, 1), "KnotVector.N degree 1 at 1 (Right) == (0, 1)");
+dies_ok( { $kv.N(1, 1.0, Reasonable) }, "Cannot pass reasonable to KnotVector.N");
 
 is($kv.N(1, 0.5), (0..1).map({ N(@knots, $_, 1, 0.5) }), "KnotVector.N degree 1 matches test N");
 is($kv.N(1, 0.5, Right), (0..1).map({ N(@knots, $_, 1, 0.5) }), "KnotVector.N degree 1 matches test N (Right)");
@@ -87,6 +88,8 @@ is($kv.N(2, 1.25, Right), (0..3).map({ N(@knots2, $_, 2, 1.25) }),
    "KnotVector.N degree 2 matches test N for 1.25 from the Right");
 is($kv.N(2, 2.0, Right), (0..3).map({ N(@knots2, $_, 2, 2.0, Right) }), 
    "KnotVector.N degree 2 matches test N for 2.0 from the Right");
+is_approx($kv.ParameterRange(2)[0], 0, "ParameterRange starts at 0");
+is_approx($kv.ParameterRange(2)[1], 2, "ParameterRange ends at 0");
 
 
 done_testing;

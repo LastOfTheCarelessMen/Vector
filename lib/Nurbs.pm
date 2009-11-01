@@ -18,6 +18,11 @@ class Nubs
         self.WHAT.perl ~ ".new($.degree, {$.knot_vector.perl}, {@.control_points.perl})";        
     }
     
+    multi method ParameterRange()
+    {
+        $.knot_vector.ParameterRange($.degree);
+    }
+    
     multi method Evaluate($t, KnotBasisDirection $direction = Left)
     {
         my $n0 = $.knot_vector.N0_index($.degree, $t, $direction);
