@@ -2,24 +2,23 @@ use v6;
 
 use Vector;
 
+subset Vector2 of Vector where { $^v.Dim == 2 };
+
 class SVGPad
 {
-    has Vector $.xy_min;
-    has Vector $.xy_max;
-    has Vector $.mn_min;
-    has Vector $.mn_max;
+    has Vector2 $.xy_min;
+    has Vector2 $.xy_max;
+    has Vector2 $.mn_min;
+    has Vector2 $.mn_max;
     
-    multi method new(Vector $xy_min where { $xy_min.Dim == 2 }, 
-                     Vector $xy_max where { $xy_max.Dim == 2 }, 
-                     Vector $mn_min where { $mn_min.Dim == 2 }, 
-                     Vector $mn_max where { $mn_max.Dim == 2 }) 
+    multi method new(Vector2 $xy_min, Vector2 $xy_max, Vector2 $mn_min, Vector2 $mn_max) 
     {
         self.bless(*, xy_min => $xy_min, xy_max => $xy_max, mn_min => $mn_min, mn_max => $mn_max);
     }
     
-    multi method xy2mn(Vector $xy where { $xy.Dim == 2 })
+    multi method xy2mn(Vector2 $xy)
     {
-        
-        
+        my $t = ($xy - $.xy_min).coordinates >>/<<  ($.xy_max - $.xy_min).coordinates;
+        return $.mn_min + Vector.new(($.mn_max - $.mn_min).coordinates >>*<< $t);
     }
 }
