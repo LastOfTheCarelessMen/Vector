@@ -4,11 +4,6 @@ use Nurbs;
 use Vector;
 use Test;
 
-sub is_approx_vector(Vector $a, Vector $b, $desc)
-{
-    ok(($a - $b).Length < 0.00001, $desc);
-}
-
 plan *;
 
 my $kv = KnotVector.new((0, 0, 1, 1));

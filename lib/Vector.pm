@@ -150,4 +150,7 @@ multi sub circumfix:<⎡ ⎤>(Vector $a)
 
 subset UnitVector of Vector where { (1 - 1e-10) < $^v.Length < (1 + 1e-10) };
 
-
+sub is_approx_vector(Vector $a, Vector $b, $desc)
+{
+    ok(($a - $b).Length < 0.00001, $desc);
+}
