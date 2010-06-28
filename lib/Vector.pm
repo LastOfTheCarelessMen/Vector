@@ -1,4 +1,5 @@
 use v6;
+use MONKEY_TYPING;
 
 class Vector
 {
@@ -45,7 +46,7 @@ multi sub infix:<dot>(Vector $a, Vector $b)
     $a ⋅ $b;
 }
 
-class Vector is also
+augment class Vector
 {
     method Length()
     {
